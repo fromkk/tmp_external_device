@@ -51,8 +51,7 @@ final class ViewModel {
       return
     }
 
-    let fileList = try FileManager.default.contentsOfDirectory(atPath: url.path())
-    print("fileList \(fileList)")
+    fileList = try FileManager.default.contentsOfDirectory(atPath: url.path())
 
     url.stopAccessingSecurityScopedResource()
   }
@@ -74,6 +73,8 @@ struct ContentView: View {
         ScrollView {
           ForEach(viewModel.fileList, id: \.self) {
             Text("\($0)")
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .padding(.horizontal, 16)
           }
         }
       } else {
