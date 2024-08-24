@@ -8,9 +8,10 @@
 import AVFoundation
 import Combine
 import SwiftUI
+import ImageCaptureCore
 
 @Observable
-final class ViewModel {
+final class ViewModel: NSObject, ICDeviceBrowserDelegate, ICDeviceDelegate {
   var error: Errors?
   var fileList: [String] = []
   var shouldShowDocumentPicker: Bool = false
@@ -21,28 +22,15 @@ final class ViewModel {
   }
 
   func requestFileList() async throws {
-    guard AVExternalStorageDeviceDiscoverySession.isSupported else {
-      error = Errors.notSupported
-      return
+    let browser = ICDeviceBrowser()
+    let authorization = await browser.requestContentsAuthorization()
+    browser.delegate = self
+    switch authorization {
+    case .authorized:
+      browser.start()
+    default:
+      throw Errors.noPermission
     }
-    guard await AVExternalStorageDevice.requestAccess() else {
-      error = Errors.noPermission
-      return
-    }
-    guard let device = AVExternalStorageDeviceDiscoverySession.shared?.externalStorageDevices.first else {
-      print("no device")
-      return
-    }
-    print("device displayName \(device.displayName ?? "nil") uuid \(device.uuid?.uuidString ?? "nil") ")
-    guard let url = try device.nextAvailableURLs(withPathExtensions: ["mp4"]).first else {
-      print("failed to get url")
-      return
-    }
-    print("url \(url)")
-
-    let replacedURL = URL(string: url.absoluteString.replacing(try Regex("100APPLE/.*?$"), with: "100LEICA"))!
-    print("replacedURL \(replacedURL)")
-    try showFiles(in: replacedURL)
   }
 
   func showFiles(in url: URL) throws {
@@ -54,6 +42,46 @@ final class ViewModel {
     fileList = try FileManager.default.contentsOfDirectory(atPath: url.path())
 
     url.stopAccessingSecurityScopedResource()
+  }
+
+  // MARK: - ICDeviceBrowserDelegate
+
+  func deviceBrowser(_ browser: ICDeviceBrowser, didAdd device: ICDevice, moreComing: Bool) {
+    device.delegate = self
+    device.requestOpenSession()
+  }
+
+  func deviceBrowser(_ browser: ICDeviceBrowser, didRemove device: ICDevice, moreGoing: Bool) {
+    print("remove \(device)")
+  }
+
+  // MAKR: - ICDeviceDelegate
+
+  func didRemove(_ device: ICDevice) {
+    print("\(#function)")
+  }
+
+  func device(_ device: ICDevice, didOpenSessionWithError error: (any Error)?) {
+    print("\(#function) device \(device)")
+    if let error {
+      print("\(#function) error \(error.localizedDescription)")
+    } else if let cameraDevice = device as? ICCameraDevice {
+      print("""
+\(cameraDevice.description)
+contents \(cameraDevice.contents)
+mediaFiles \(cameraDevice.mediaFiles)
+contentCatalogPercentCompleted \(cameraDevice.contentCatalogPercentCompleted)
+isEjectable \(cameraDevice.isEjectable)
+""")
+
+      if let contents = cameraDevice.contents {
+        print("contents \(contents)")
+      }
+    }
+  }
+
+  func device(_ device: ICDevice, didCloseSessionWithError error: (any Error)?) {
+    print("\(#function)")
   }
 }
 
