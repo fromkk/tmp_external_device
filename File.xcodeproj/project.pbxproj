@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD225B602C799B55005F64F3 /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD225B5F2C799B55005F64F3 /* DocumentPickerView.swift */; };
 		ADFDD29E2C18396E00DB41F6 /* FileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFDD29D2C18396E00DB41F6 /* FileApp.swift */; };
 		ADFDD2A02C18396E00DB41F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFDD29F2C18396E00DB41F6 /* ContentView.swift */; };
 		ADFDD2A22C18396F00DB41F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADFDD2A12C18396F00DB41F6 /* Assets.xcassets */; };
@@ -14,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD225B5F2C799B55005F64F3 /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
+		AD70136F2C5CB75300737AB7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS17.5.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
 		ADFDD29A2C18396E00DB41F6 /* File.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = File.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADFDD29D2C18396E00DB41F6 /* FileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileApp.swift; sourceTree = "<group>"; };
 		ADFDD29F2C18396E00DB41F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -33,11 +36,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD70136E2C5CB75300737AB7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD70136F2C5CB75300737AB7 /* IOKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ADFDD2912C18396E00DB41F6 = {
 			isa = PBXGroup;
 			children = (
 				ADFDD29C2C18396E00DB41F6 /* File */,
 				ADFDD29B2C18396E00DB41F6 /* Products */,
+				AD70136E2C5CB75300737AB7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,6 +69,7 @@
 				ADFDD2A12C18396F00DB41F6 /* Assets.xcassets */,
 				ADFDD2A32C18396F00DB41F6 /* File.entitlements */,
 				ADFDD2A42C18396F00DB41F6 /* Preview Content */,
+				AD225B5F2C799B55005F64F3 /* DocumentPickerView.swift */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -140,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADFDD2A02C18396E00DB41F6 /* ContentView.swift in Sources */,
+				AD225B602C799B55005F64F3 /* DocumentPickerView.swift in Sources */,
 				ADFDD29E2C18396E00DB41F6 /* FileApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +288,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = Camera;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Access to a File Provide Domain";
+				INFOPLIST_KEY_NSFileProviderPresenceUsageDescription = "File Provider Presence usage";
+				INFOPLIST_KEY_NSSystemAdministrationUsageDescription = Admin;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -283,7 +301,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -292,8 +310,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.File;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -312,6 +333,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = Camera;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "Access to a File Provide Domain";
+				INFOPLIST_KEY_NSFileProviderPresenceUsageDescription = "File Provider Presence usage";
+				INFOPLIST_KEY_NSSystemAdministrationUsageDescription = Admin;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -321,7 +346,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -330,8 +355,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.fromkk.File;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
